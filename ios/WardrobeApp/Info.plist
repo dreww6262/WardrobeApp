@@ -54,7 +54,7 @@
 	<string>We need access to your photo library to select photos of your clothes</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Ionicons.ttf</string>
+			<string>MaterialCommunityIcons.ttf</string>
 	</array>
 </dict>
 </plist>

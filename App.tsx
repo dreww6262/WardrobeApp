@@ -26,16 +26,16 @@ const App: React.FC = () => {
 
               switch (route.name) {
                 case 'UploadWardrobe':
-                  iconName = focused ? 'upload' : 'upload-outline';
+                  iconName = 'hanger';
                   break;
                 case 'AIStylist':
-                  iconName = focused ? 'tshirt-crew' : 'tshirt-crew-outline';
+                  iconName = 'creation';
                   break;
                 case 'Profile':
                   iconName = focused ? 'account' : 'account-outline';
                   break;
                 default:
-                  iconName = 'help';
+                  iconName = 'help-circle';
               }
 
               return <Icon name={iconName} size={size} color={color} />;
@@ -49,9 +49,24 @@ const App: React.FC = () => {
             },
           })}
         >
-          <Tab.Screen name="AIStylist" component={AIStylist} options={{ title: 'AI Stylist' }} />
-          <Tab.Screen name="UploadWardrobe" component={UploadWardrobe} options={{ title: 'Upload Wardrobe' }} />
-          <Tab.Screen name="Profile" component={ProfileScreen} />
+          <Tab.Screen 
+            name="AIStylist" 
+            component={AIStylist} 
+            options={{ 
+              title: 'AI Stylist',
+            }} 
+          />
+          <Tab.Screen 
+            name="UploadWardrobe" 
+            component={UploadWardrobe} 
+            options={{ 
+              title: 'Upload Wardrobe',
+            }} 
+          />
+          <Tab.Screen 
+            name="Profile" 
+            component={ProfileScreen} 
+          />
         </Tab.Navigator>
       </SafeAreaView>
     </NavigationContainer>
