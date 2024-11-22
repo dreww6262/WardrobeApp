@@ -1,118 +1,61 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { RootTabParamList } from './src/types/navigation';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// Screens
+import UploadWardrobe from './src/screens/upload-wardrobe';
+import AIStylist from './src/screens/ai-stylist';
+import ProfileScreen from './src/screens/profile';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const Tab = createBottomTabNavigator<RootTabParamList>();
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
+const App: React.FC = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+    <NavigationContainer>
+      <SafeAreaView style={{ flex: 1 }}>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName: string;
 
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+              switch (route.name) {
+                case 'UploadWardrobe':
+                  iconName = focused ? 'upload' : 'upload-outline';
+                  break;
+                case 'AIStylist':
+                  iconName = focused ? 'tshirt-crew' : 'tshirt-crew-outline';
+                  break;
+                case 'Profile':
+                  iconName = focused ? 'account' : 'account-outline';
+                  break;
+                default:
+                  iconName = 'help';
+              }
+
+              return <Icon name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: '#007AFF',
+            tabBarInactiveTintColor: 'gray',
+            headerStyle: {
+              elevation: 0,
+              shadowOpacity: 0,
+              borderBottomWidth: 0,
+            },
+          })}
+        >
+          <Tab.Screen name="AIStylist" component={AIStylist} options={{ title: 'AI Stylist' }} />
+          <Tab.Screen name="UploadWardrobe" component={UploadWardrobe} options={{ title: 'Upload Wardrobe' }} />
+          <Tab.Screen name="Profile" component={ProfileScreen} />
+        </Tab.Navigator>
+      </SafeAreaView>
+    </NavigationContainer>
+  );
+};
 
 export default App;
